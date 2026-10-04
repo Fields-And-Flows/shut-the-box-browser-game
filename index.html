@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shut the Box</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Shut the Box</h1>
+      <p class="subtitle">Browser Edition</p>
+    </header>
+
+    <section class="panel top-panel">
+      <div class="player-info">
+        <label for="playerCount">Players:</label>
+        <select id="playerCount">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <button id="newGameBtn">New Game</button>
+      </div>
+
+      <div class="mode-info">
+        <label for="rulesMode">Rules:</label>
+        <select id="rulesMode">
+          <option value="classic" selected>Classic (2 dice: pair or total)</option>
+          <option value="alwaysSum">Always Sum (any combo)</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="panel status-panel">
+      <p id="turnText">Player 1's turn</p>
+      <p id="diceText">Roll to begin</p>
+      <p id="roundText">Round 1 of 5</p>
+    </section>
+
+    <section class="panel dice-panel">
+      <button id="rollBtn">Roll Dice</button>
+      <div class="dice-wrap">
+        <div class="die" id="die1">-</div>
+        <div class="die" id="die2">-</div>
+      </div>
+      <p id="rollValue">Roll total: -</p>
+      <p id="oneDieHint" class="hint"></p>
+    </section>
+
+    <section class="panel board-panel">
+      <h2>Tiles</h2>
+      <div id="tiles" class="tiles"></div>
+      <p id="selectionText">Selected: none</p>
+      <div class="actions">
+        <button id="confirmMoveBtn" disabled>Confirm Move</button>
+        <button id="clearSelectionBtn" disabled>Clear Selection</button>
+        <button id="endTurnBtn" disabled>End Turn</button>
+      </div>
+    </section>
+
+    <section class="panel scores-panel">
+      <h2>Scores</h2>
+      <ul id="scoresList"></ul>
+      <p id="winnerText"></p>
+    </section>
+
+    <footer>
+      <small>Tip: Close 7, 8, and 9 to unlock one-die rolls.</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

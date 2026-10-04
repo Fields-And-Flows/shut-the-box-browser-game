@@ -1,0 +1,206 @@
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --panel2: #1f2937;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #22c55e;
+  --accent2: #3b82f6;
+  --danger: #ef4444;
+  --tile-open: #f8fafc;
+  --tile-open-text: #111827;
+  --tile-closed: #334155;
+  --tile-selected: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top, #1e293b, var(--bg));
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.app {
+  width: min(960px, 95vw);
+  margin: 24px auto 40px;
+  display: grid;
+  gap: 14px;
+}
+
+header {
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 2px;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.panel {
+  background: linear-gradient(180deg, var(--panel), var(--panel2));
+  border: 1px solid #374151;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.top-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.player-info, .mode-info {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+button, select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #4b5563;
+  background: #0b1220;
+  color: var(--text);
+}
+
+button {
+  cursor: pointer;
+  transition: transform 0.05s ease, opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#newGameBtn {
+  background: var(--accent2);
+  border: none;
+}
+
+#rollBtn {
+  background: var(--accent);
+  border: none;
+  color: #052e16;
+  font-weight: 700;
+}
+
+.status-panel p {
+  margin: 6px 0;
+}
+
+.dice-wrap {
+  display: flex;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.die {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #111827;
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+}
+
+#rollValue {
+  font-weight: 700;
+  margin: 6px 0 0;
+}
+
+.hint {
+  color: #93c5fd;
+  margin: 6px 0 0;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(36px, 1fr));
+  gap: 8px;
+}
+
+.tile {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: var(--tile-open);
+  color: var(--tile-open-text);
+}
+
+.tile.closed {
+  background: var(--tile-closed);
+  color: #cbd5e1;
+  text-decoration: line-through;
+}
+
+.tile.selected {
+  background: var(--tile-selected);
+  color: #111827;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#confirmMoveBtn {
+  background: var(--accent);
+  border: none;
+  color: #052e16;
+  font-weight: 700;
+}
+
+#endTurnBtn {
+  background: var(--danger);
+  border: none;
+  color: white;
+}
+
+.scores-panel ul {
+  list-style: none;
+  margin: 6px 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.scores-panel li {
+  background: #0b1220;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+}
+
+#winnerText {
+  margin-top: 10px;
+  font-weight: 700;
+  color: #86efac;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+}
