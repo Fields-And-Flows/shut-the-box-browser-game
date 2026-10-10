@@ -3,76 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shut the Box</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Play Tak, a beautiful game of roads and strategy, with a friend in your browser." />
+  <title>Tak · A Beautiful Game</title>
+  <link rel="stylesheet" href="tak.css" />
 </head>
 <body>
   <main class="app">
-    <header>
-      <h1>Shut the Box</h1>
-      <p class="subtitle">Browser Edition</p>
+    <header class="masthead">
+      <div><p class="eyebrow">A BEAUTIFUL GAME</p><h1>Tak<span>.</span></h1></div>
+      <div class="setup">
+        <label for="boardSize">Board size</label>
+        <select id="boardSize">
+          <option value="3">3 × 3</option><option value="4">4 × 4</option>
+          <option value="5" selected>5 × 5</option><option value="6">6 × 6</option>
+          <option value="7">7 × 7</option><option value="8">8 × 8</option>
+        </select>
+        <button id="newGame">New game</button>
+        <a href="#rules">How to play ↓</a>
+      </div>
     </header>
-
-    <section class="panel top-panel">
-      <div class="player-info">
-        <label for="playerCount">Players:</label>
-        <select id="playerCount">
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-        </select>
-        <button id="newGameBtn">New Game</button>
-        <a href="help.html" class="help-link">Help / Rules</a>
+    <section class="turn-banner" aria-live="polite" aria-atomic="true">
+      <span id="turnMarker" class="turn-marker"></span>
+      <div><h2 id="turnText"></h2><p id="turnHint"></p></div>
+      <span class="local-badge">2 players · pass &amp; play</span>
+    </section>
+    <div class="play-layout">
+      <section class="board-panel" aria-label="Tak board">
+        <div class="board-heading"><span>CONNECT TWO OPPOSITE EDGES</span><span id="moveNumber"></span></div>
+        <div id="board" class="board"></div>
+        <p class="board-caption">Only the top piece controls a square. Select any stack to inspect it.</p>
+      </section>
+      <aside class="sidebar">
+        <section class="card"><h2>Reserves</h2><div id="reserves"></div></section>
+        <section class="card controls">
+          <h2>Your move</h2>
+          <div class="mode-buttons" role="group" aria-label="Move action">
+            <button id="placeMode" aria-pressed="true">Place a piece</button>
+            <button id="moveMode" aria-pressed="false">Move a stack</button>
+          </div>
+          <div id="placementControls">
+            <p class="label">Choose a piece, then an empty square.</p>
+            <div class="piece-options" role="group" aria-label="Piece type">
+              <button data-piece="flat" aria-pressed="true"><span class="piece-demo flat"></span>Flat</button>
+              <button data-piece="wall" aria-pressed="false"><span class="piece-demo wall"></span>Wall</button>
+              <button data-piece="cap" aria-pressed="false"><span class="piece-demo cap"></span>Capstone</button>
+            </div>
+          </div>
+          <div id="movementControls" hidden>
+            <p class="label">Select a stack you control, then plan its move.</p>
+            <label for="carryCount">Pieces to carry (from the top)</label>
+            <select id="carryCount" disabled></select>
+            <label for="direction">Direction</label>
+            <select id="direction"><option value="N">↑ North</option><option value="E">→ East</option><option value="S">↓ South</option><option value="W">← West</option></select>
+            <label for="drops">Pieces dropped per square</label>
+            <input id="drops" type="text" inputmode="numeric" placeholder="e.g. 1, 2" autocomplete="off" />
+            <p class="label">Drop from the bottom of your carried stack. Counts must add up to the carry count.</p>
+            <p id="movePreview" class="preview"></p>
+            <button id="confirmMove" class="primary" disabled>Confirm stack move</button>
+          </div>
+          <p id="message" role="status" aria-live="polite"></p>
+          <div class="secondary-actions"><button id="cancelMove">Clear selection</button><button id="undo" disabled>Undo turn</button></div>
+        </section>
+        <section class="card"><h2 id="stackHeading">Stack inspector</h2><div id="stackInspector"><p class="label">Select an occupied square to see every piece.</p></div></section>
+        <section class="card"><h2>Move history</h2><ol id="history" class="history"><li class="label">Your story starts here.</li></ol></section>
+      </aside>
+    </div>
+    <section class="card rules" id="rules">
+      <p class="eyebrow">LEARN THE GAME</p><h2>A road to victory</h2>
+      <div class="rules-grid">
+        <div><h3>01 · Build a road</h3><p>Connect opposite edges with your visible flat stones and capstones. Roads turn at right angles, never diagonally. Either direction wins. If a move creates roads for both players, the mover wins.</p></div>
+        <div><h3>02 · The opening exchange</h3><p>White goes first. On each player's first turn, place one of your opponent's flat stones on an empty square. After these two turns, place your own pieces or move a stack.</p></div>
+        <div><h3>03 · Three kinds of pieces</h3><p><strong>Flats</strong> build roads. <strong>Walls</strong> block roads and cannot be covered by ordinary stones. <strong>Capstones</strong> build roads, cannot be covered, and can flatten a wall when dropped alone as the final piece of a move.</p></div>
+        <div><h3>04 · Carry and spread</h3><p>Control a stack with your color on top. Carry any number of its top pieces up to the board's width, keeping their order. Move in one straight orthogonal direction, dropping at least one piece on every square, bottom first. Walls can move too.</p></div>
+        <div><h3>05 · A flat finish</h3><p>If the board fills or either player has no stones <em>and</em> no capstones left in reserve, the game ends. Roads take priority; otherwise, most visible flat stones wins. Walls, capstones, and buried pieces don't score. Equal scores draw.</p></div>
+        <div><h3>06 · Make yourself at home</h3><p>Play with a friend on the same device. Click or tap squares; keyboard players can Tab to squares and use Enter or Space. Undo takes back a completed turn. Changing board size takes effect when you start a new game.</p><a href="https://www.racingcow.io/pdf/games/tak_optimized.pdf" target="_blank" rel="noopener noreferrer">Supplied rulebook ↗</a> · <a href="https://ustak.org/play-beautiful-game-tak/" target="_blank" rel="noopener noreferrer">Tak rules reference ↗</a></div>
       </div>
-
-      <div class="mode-info">
-        <label for="rulesMode">Rules:</label>
-        <select id="rulesMode">
-          <option value="classic" selected>Classic (2 dice: pair or total)</option>
-          <option value="alwaysSum">Always Sum (any combo)</option>
-        </select>
-      </div>
     </section>
-
-    <section class="panel status-panel">
-      <p id="turnText">Player 1's turn</p>
-      <p id="diceText">Roll to begin</p>
-      <p id="roundText">Round 1 of 5</p>
-    </section>
-
-    <section class="panel dice-panel">
-      <button id="rollBtn">Roll Dice</button>
-      <div class="dice-wrap">
-        <div class="die" id="die1">-</div>
-        <div class="die" id="die2">-</div>
-      </div>
-      <p id="rollValue">Roll total: -</p>
-      <p id="oneDieHint" class="hint"></p>
-    </section>
-
-    <section class="panel board-panel">
-      <h2>Tiles</h2>
-      <div id="tiles" class="tiles"></div>
-      <p id="selectionText">Selected: none</p>
-      <div class="actions">
-        <button id="confirmMoveBtn" disabled>Confirm Move</button>
-        <button id="clearSelectionBtn" disabled>Clear Selection</button>
-        <button id="endTurnBtn" disabled>End Turn</button>
-      </div>
-    </section>
-
-    <section class="panel scores-panel">
-      <h2>Scores</h2>
-      <ul id="scoresList"></ul>
-      <p id="winnerText"></p>
-    </section>
-
-    <footer>
-      <small>Tip: Close 7, 8, and 9 to unlock one-die rolls.</small>
-    </footer>
+    <footer>Made for a quiet moment of strategy. <a href="shut-the-box.html">Play Shut the Box instead ↗</a></footer>
   </main>
-
-  <script src="script.js"></script>
+  <script src="tak-engine.js"></script>
+  <script src="tak.js"></script>
 </body>
 </html>
